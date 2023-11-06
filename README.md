@@ -42,13 +42,7 @@ Please use [TailwindCSS](https://tailwindcss.com/).
 
 ### Getting the data
 Please query the cat data from the [Cat API](https://developers.thecatapi.com)
-For the overview, please use:
-```
-https://api.thecatapi.com/v1/images/search`
-```
-For the filters, you could use breeds:
-```
-https://api.thecatapi.com/v1/breeds
+
 ```
 **Bonus points**: display the details of a specific breed in the overlay
 ```
