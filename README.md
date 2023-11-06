@@ -24,8 +24,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 ## The task
 You are tasked with building an interactive Cat grid.
 
-You can find a simple mock-up of the Cat grid in the following figma file:
-https://www.figma.com/file/QaAUTjri39HPaSUTEoMfWQ/Untitled?type=design&node-id=0%3A1&mode=dev
+You can find a [simple mock-up of the Cat grid in the figma file](https://www.figma.com/file/QaAUTjri39HPaSUTEoMfWQ/Cat-Grid?type=design&node-id=0%3A1&mode=dev)
 
 Please keep in mind that the UI is not the focus of this task. Feel free to use component libraries to speed up development. We like any of the following:
 * [shadcn](https://ui.shadcn.com/)
@@ -50,7 +49,7 @@ https://api.thecatapi.com/v1/breeds/:breed_id
 ```
 
 ### Building the UI
-Please review the Cat grid mock-up in the figma file linked above. Please choose an appropriate breakpoint when switching between mobile and desktop layouts.
+Please review [the Cat grid mock-up in the figma file](https://www.figma.com/file/QaAUTjri39HPaSUTEoMfWQ/Cat-Grid?type=design&node-id=0%3A1&mode=dev) linked above. Please choose an appropriate breakpoint when switching between mobile and desktop layouts.
 
 #### Mobile
 On mobile, the cat grid features a headline and single row of cat cards. Clicking on a cat card triggers the overlay, displaying additional information about the selected breeed.
