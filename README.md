@@ -1,3 +1,5 @@
+# Welcome to &why's coding test
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -18,19 +20,50 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## The task
+You are tasked with building an interactive Cat grid.
 
-To learn more about Next.js, take a look at the following resources:
+You can find a simple mock-up of the Cat grid in the following figma file:
+https://www.figma.com/file/QaAUTjri39HPaSUTEoMfWQ/Untitled?type=design&node-id=0%3A1&mode=dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Please keep in mind that the UI is not the focus of this task. Feel free to use component libraries to speed up development. We like any of the following:
+* [shadcn](https://ui.shadcn.com/)
+* [Headless UI](https://headlessui.com/)
+* [Radix UI](https://www.radix-ui.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Please use [TailwindCSS](https://tailwindcss.com/).
 
-## Deploy on Vercel
+### Getting the data
+Please query the cat data from the [Cat API](https://developers.thecatapi.com)
+For the overview, please use:
+```
+https://api.thecatapi.com/v1/images/search`
+```
+For the filters, you could use breeds:
+```
+https://api.thecatapi.com/v1/breeds
+```
+**Bonus points**: display the details of a specific breed in the overlay
+```
+https://api.thecatapi.com/v1/breeds/:breed_id
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Building the UI
+Please review the Cat grid mock-up in the figma file linked above. Please choose an appropriate breakpoint when switching between mobile and desktop layouts.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### Mobile
+On mobile, the cat grid features a headline and single row of cat cards. Clicking on a cat card triggers the overlay, displaying additional information about the selected breeed.
+
+There are **no** filters on mobile
+
+#### Tablet and above
+On larger screens, the cat grid offers a filter bar next to the cat cards. Checking one of the filters should update the card grid. Clicking on a cat card triggers the overlay, displaying additional information about the selected breeed.
+
+Please distribute cards across columns as you see fit
+
+## Expected outcome
+Please submit a PR with your implementation of the Cat grid. We'd expect a working deployment that we can preview in Vercel.
+
+Thank you so much for taking the time to complete this task 🙏
+If you have any question, please do not hesitate to reach out.
