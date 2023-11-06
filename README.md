@@ -20,6 +20,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+### Env Variables
+Please pull the environment variables from Vercel using the following command:
+```
+vc env pull --environment=production --yes
+```
+You need to have the [Vercel CLI](https://vercel.com/docs/cli) installed globally.
+
 
 ## The task
 You are tasked with building an interactive Cat grid.
