@@ -1,7 +1,11 @@
+import CatList from "./components/CatList";
+import Sidebar from "./components/Sidebar";
+
 export default function CatGrid() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      A cat grid
+    <main className="flex md:gap-5 h-screen">
+      <Sidebar />
+      <CatList />
     </main>
-  )
+  );
 }
