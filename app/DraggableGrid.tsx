@@ -43,7 +43,9 @@ export default function DraggableGrid(props: DraggableGridProps) {
                     drag
                     dragConstraints={getDragConstraints()}
                 >
-                    <Grid />
+                    <div className="flex">
+                        <Grid />
+                    </div>
                 </motion.div>
             </motion.div>
         </motion.div>

@@ -17,9 +17,11 @@ export default function Grid(props: GridProps) {
                 >
                     {[...Array(numRows)].map((_, index) => (
                         <div
+                            className=""
                             key={index}
-                            className="size-48 shrink-0 bg-gray-200"
-                        ></div>
+                        >
+                            <div className="size-48 shrink-0 bg-gray-200 p-8"></div>
+                        </div>
                     ))}
                 </div>
             ))}
