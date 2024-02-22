@@ -1,10 +1,12 @@
-import DraggableGrid from "./DraggableGrid";
+import Canvas from "./Canvas";
 import Grid from "./Grid";
 
 export default function CatGrid() {
     return (
-        <main className={"min-h-screen"}>
-            <DraggableGrid />
+        <main>
+            <Canvas>
+                <Grid />
+            </Canvas>
         </main>
     );
 }

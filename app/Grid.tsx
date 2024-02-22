@@ -1,14 +1,9 @@
-import { useRef } from "react";
 import { cn } from "./lib/utils";
 
 const numCols = 14;
 const numRows = 12;
 
-export interface GridProps {
-    handleSizeChange?: (size: number) => void;
-}
-
-export default function Grid(props: GridProps) {
+export default function Grid() {
     return (
         <div className="flex gap-8 p-16">
             {[...Array(numCols)].map((_, index) => (
