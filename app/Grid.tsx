@@ -1,6 +1,7 @@
 import { useRef } from "react";
+import { cn } from "./lib/utils";
 
-const numCols = 10;
+const numCols = 14;
 const numRows = 12;
 
 export interface GridProps {
@@ -13,15 +14,13 @@ export default function Grid(props: GridProps) {
             {[...Array(numCols)].map((_, index) => (
                 <div
                     key={index}
-                    className="flex shrink-0 flex-col gap-8"
+                    className={cn("flex shrink-0 flex-col gap-8", { "pt-20": index % 2 === 0 })}
                 >
                     {[...Array(numRows)].map((_, index) => (
                         <div
-                            className=""
                             key={index}
-                        >
-                            <div className="size-48 shrink-0 bg-gray-200 p-8"></div>
-                        </div>
+                            className="size-64 shrink-0 bg-gray-200"
+                        ></div>
                     ))}
                 </div>
             ))}
