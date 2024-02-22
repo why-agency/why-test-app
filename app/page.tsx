@@ -1,3 +1,10 @@
+import DraggableGrid from "./DraggableGrid";
+import Grid from "./Grid";
+
 export default function CatGrid() {
-    return <main className={"flex min-h-screen flex-col items-center justify-between p-24"}>Hello World!</main>;
+    return (
+        <main className={"min-h-screen"}>
+            <DraggableGrid />
+        </main>
+    );
 }
