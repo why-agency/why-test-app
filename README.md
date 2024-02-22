@@ -41,7 +41,7 @@ Please use [TailwindCSS](https://tailwindcss.com/).
 ### Getting the data
 Please query cat data from the [Cat API](https://developers.thecatapi.com)
 
-1. Create an interactive, endless grid that showcases the various cats. A good example is https://findmy.vitra.com. Feel free to tweak the design to your needs.
+1. Create an interactive, endless grid that showcases the various cats. A good example is [Vitra's gift finder](https://findmy.vitra.com/f/en-en/gifts). Feel free to tweak the design to your needs.
 2. Please display the details of a specific breed in an overlay.
 3. Implement a filter bar that allows users to filter the cat grid by breed.
 
