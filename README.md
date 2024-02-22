@@ -19,6 +19,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 ### Env Variables
+Link your local repository with the Vercel project. The CLI will guide you through the setup. Select `and-why-dev` as account and `why-test-app` as project, when prompted.
+```
+vc link
+```
+
 Please pull the environment variables from Vercel using the following command:
 ```
 vc env pull --environment=production --yes
