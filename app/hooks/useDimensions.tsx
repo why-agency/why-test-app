@@ -40,6 +40,7 @@ export default function useDimensions(): ReturnType {
         if (!node) {
             return;
         }
+
         return {
             x: node.scrollWidth,
             y: node.scrollHeight,

@@ -26,12 +26,13 @@ export default function Grid(props: GridProps) {
             style={{ gridTemplateRows: `repeat(${numRows}, auto)`, gridTemplateColumns: `repeat(${numCols}, auto)` }}
         >
             {data.map((item) => (
-                <div
+                <motion.div
+                    layout
                     key={item.id}
                     className="size-56 bg-gray-200"
                 >
                     {item.id}
-                </div>
+                </motion.div>
             ))}
         </div>
     );

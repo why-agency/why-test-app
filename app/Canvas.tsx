@@ -52,7 +52,7 @@ export default function Canvas(props: CanvasProps) {
             console.log("remeasure");
             manualRemeasure();
             setForceCenter(true);
-        });
+        }, 200);
     }
 
     function onResetEnd() {
@@ -71,7 +71,7 @@ export default function Canvas(props: CanvasProps) {
 
     return (
         <motion.div className={cn("h-screen overflow-hidden", { invisible: !distanceX || !distanceY })}>
-            <motion.div style={getTransform()}>
+            <motion.div animate={getTransform()}>
                 <motion.div
                     key={`${key}`}
                     drag
