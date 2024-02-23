@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { cn } from "./lib/utils";
 
-const numCols = 14;
-const numRows = 12;
+export interface GridProps {
+    small: boolean;
+}
 
-export default function Grid() {
+export default function Grid(props: GridProps) {
+    const numCols = props.small ? 6 : 12;
+    const numRows = props.small ? 6 : 12;
+
     return (
         <div className="flex gap-8 p-16">
             {[...Array(numCols)].map((_, index) => (
@@ -16,7 +21,9 @@ export default function Grid() {
                             key={rowIndex}
                             className="size-64 shrink-0 bg-gray-200"
                         >
-                            {index} / {rowIndex}
+                            <span className="cursor-pointer">
+                                {index} / {rowIndex}
+                            </span>
                         </div>
                     ))}
                 </div>

@@ -1,30 +1,36 @@
 "use client";
 
-import { animationControls, motion, useAnimationControls, useDragControls } from "framer-motion";
+import { DragControls, animationControls, motion, useAnimationControls, useDragControls } from "framer-motion";
 import useDimensions from "./hooks/useDimensions";
 import { cn } from "./lib/utils";
 import { ReactNode, useEffect, useRef, useState } from "react";
+import Grid from "./Grid";
 
-export interface CanvasProps {
-    children: ReactNode;
-}
+export interface CanvasProps {}
 
 export default function Canvas(props: CanvasProps) {
-    const { ref, dimensions } = useDimensions();
+    const { ref, dimensions, manualRemeasure } = useDimensions();
     const animationControls = useAnimationControls();
+    const [key, setKey] = useState(0);
 
     const prevX = useRef(0);
     const prevY = useRef(0);
     const dragAnimating = useRef(false);
-    const shouldReCenter = useRef(false);
 
     let distanceX = !!dimensions && dimensions.x / 2 - window.innerWidth / 2;
     let distanceY = !!dimensions && dimensions.y / 2 - window.innerHeight / 2;
+
+    const [forceCenter, setForceCenter] = useState(false);
+
+    // Only for development/testing purpose
+    // Simulation of animation behavior if dataset gets 'smaller' after filtering
+    const [gridSmall, setGridSmall] = useState(false);
 
     function getDragConstraints() {
         if (!distanceX || !distanceY) {
             return;
         }
+
         return {
             top: -distanceY,
             right: distanceX,
@@ -40,24 +46,50 @@ export default function Canvas(props: CanvasProps) {
         return { x: -distanceX, y: -distanceY };
     }
 
+    function recenter() {
+        animationControls.set({
+            x: 0,
+            y: 0,
+        });
+    }
+
+    function handleContentChange() {
+        setGridSmall((x) => !x);
+        setTimeout(() => {
+            manualRemeasure();
+            setForceCenter(true);
+        });
+    }
+
+    function onResetEnd() {
+        setKey((x) => x + 1);
+        setForceCenter(false);
+    }
+
     return (
         <motion.div className={cn("h-screen overflow-hidden", { invisible: !distanceX || !distanceY })}>
             <motion.div style={getTransform()}>
                 <motion.div
+                    key={`${key}`}
                     drag
-                    animate={animationControls}
                     dragConstraints={getDragConstraints()}
-                    onDragStart={() => (dragAnimating.current = true)}
-                    onDragEnd={() => (dragAnimating.current = true)}
+                    className={cn({ "!translate-x-0 !translate-y-0 transition-all": forceCenter })}
+                    onTransitionEnd={() => onResetEnd()}
                 >
                     <div
                         className="flex"
                         ref={ref}
                     >
-                        {props.children}
+                        <Grid small={gridSmall} />
                     </div>
                 </motion.div>
             </motion.div>
+            <button
+                className="fixed bottom-10 left-10 size-40 bg-lime-500"
+                onClick={handleContentChange}
+            >
+                Filter
+            </button>
         </motion.div>
     );
 }

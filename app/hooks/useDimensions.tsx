@@ -11,6 +11,7 @@ export type Dimensions =
 export type ReturnType = {
     ref: (node: HTMLElement | null) => void;
     dimensions: Dimensions;
+    manualRemeasure: () => Dimensions;
 };
 
 const DEBOUNCE_TIME_MS = 100;
@@ -29,20 +30,29 @@ export default function useDimensions(): ReturnType {
 
     const [dimensions, setDimensions] = useState<Dimensions>(undefined);
 
+    const manualRemeasure = useCallback(() => {
+        const dimensions = getDimensions(node);
+        setDimensions(dimensions);
+        return dimensions;
+    }, [node]);
+
+    function getDimensions(node: HTMLElement | null) {
+        if (!node) {
+            return;
+        }
+        return {
+            x: node.scrollWidth,
+            y: node.scrollHeight,
+        };
+    }
+
     useEffect(() => {
         function measure() {
             if (timeout.current) {
                 clearTimeout(timeout.current);
             }
             timeout.current = setTimeout(() => {
-                if (!node) {
-                    return;
-                }
-                const rect = node.getBoundingClientRect();
-                setDimensions({
-                    x: node.scrollWidth,
-                    y: node.scrollHeight,
-                });
+                setDimensions(getDimensions(node));
             }, DEBOUNCE_TIME_MS);
         }
 
@@ -54,5 +64,5 @@ export default function useDimensions(): ReturnType {
         };
     }, [node]);
 
-    return { ref, dimensions };
+    return { ref, dimensions, manualRemeasure };
 }
