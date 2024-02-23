@@ -46,25 +46,28 @@ export default function Canvas(props: CanvasProps) {
         return { x: -distanceX, y: -distanceY };
     }
 
-    function recenter() {
-        animationControls.set({
-            x: 0,
-            y: 0,
-        });
-    }
-
     function handleContentChange() {
         setGridSmall((x) => !x);
         setTimeout(() => {
+            console.log("remeasure");
             manualRemeasure();
             setForceCenter(true);
         });
     }
 
     function onResetEnd() {
+        console.log("reset end");
         setKey((x) => x + 1);
         setForceCenter(false);
     }
+
+    // useEffect(() => {
+    //     if (!forceCenter) {
+    //         return;
+    //     }
+    //     setKey((x) => x + 1);
+    //     setForceCenter(false);
+    // }, [forceCenter]);
 
     return (
         <motion.div className={cn("h-screen overflow-hidden", { invisible: !distanceX || !distanceY })}>
@@ -73,7 +76,7 @@ export default function Canvas(props: CanvasProps) {
                     key={`${key}`}
                     drag
                     dragConstraints={getDragConstraints()}
-                    className={cn({ "!translate-x-0 !translate-y-0 transition-all": forceCenter })}
+                    className={cn({ "!translate-x-0 !translate-y-0 transition-transform": forceCenter })}
                     onTransitionEnd={() => onResetEnd()}
                 >
                     <div

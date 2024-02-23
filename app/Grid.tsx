@@ -1,31 +1,36 @@
-import { useState } from "react";
+"use client";
+
 import { cn } from "./lib/utils";
+import { motion } from "framer-motion";
 
 export interface GridProps {
     small: boolean;
 }
 
+const dataFull: { id: number }[] = [...Array(100)].map((_, index) => {
+    return {
+        id: index,
+    };
+});
+
+const dataFiltered = dataFull.filter((x) => x.id % 2 === 0);
+
 export default function Grid(props: GridProps) {
-    const numCols = props.small ? 6 : 12;
-    const numRows = props.small ? 6 : 12;
+    const data = props.small ? dataFiltered : dataFull;
+    const numCols = Math.ceil(Math.sqrt(data.length));
+    const numRows = numCols;
 
     return (
-        <div className="flex gap-8 p-16">
-            {[...Array(numCols)].map((_, index) => (
+        <div
+            className="grid gap-8 p-16"
+            style={{ gridTemplateRows: `repeat(${numRows}, auto)`, gridTemplateColumns: `repeat(${numCols}, auto)` }}
+        >
+            {data.map((item) => (
                 <div
-                    key={index}
-                    className={cn("flex shrink-0 flex-col gap-8", { "pt-20": index % 2 === 0 })}
+                    key={item.id}
+                    className="size-56 bg-gray-200"
                 >
-                    {[...Array(numRows)].map((_, rowIndex) => (
-                        <div
-                            key={rowIndex}
-                            className="size-64 shrink-0 bg-gray-200"
-                        >
-                            <span className="cursor-pointer">
-                                {index} / {rowIndex}
-                            </span>
-                        </div>
-                    ))}
+                    {item.id}
                 </div>
             ))}
         </div>
