@@ -11,11 +11,13 @@ export default function Grid() {
                     key={index}
                     className={cn("flex shrink-0 flex-col gap-8", { "pt-20": index % 2 === 0 })}
                 >
-                    {[...Array(numRows)].map((_, index) => (
+                    {[...Array(numRows)].map((_, rowIndex) => (
                         <div
-                            key={index}
+                            key={rowIndex}
                             className="size-64 shrink-0 bg-gray-200"
-                        ></div>
+                        >
+                            {index} / {rowIndex}
+                        </div>
                     ))}
                 </div>
             ))}

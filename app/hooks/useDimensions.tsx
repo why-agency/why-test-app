@@ -1,5 +1,5 @@
 import { MotionValue } from "framer-motion";
-import { useState, useCallback, useLayoutEffect, RefObject, useRef } from "react";
+import { useState, useCallback, useLayoutEffect, RefObject, useRef, useEffect } from "react";
 
 export type Dimensions =
     | {
@@ -29,7 +29,7 @@ export default function useDimensions(): ReturnType {
 
     const [dimensions, setDimensions] = useState<Dimensions>(undefined);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         function measure() {
             if (timeout.current) {
                 clearTimeout(timeout.current);
