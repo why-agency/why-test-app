@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useAnimationControls, useDragControls } from "framer-motion";
 import useDimensions from "./hooks/useDimensions";
 import { cn } from "./lib/utils";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Grid from "./Grid";
 import { CatData } from "./page";
 
@@ -15,85 +15,82 @@ export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();
     const [key, setKey] = useState(0);
 
-    let distanceX = !!dimensions && dimensions.x / 2 - window.innerWidth / 2;
-    let distanceY = !!dimensions && dimensions.y / 2 - window.innerHeight / 2;
-
-    const [forceCenter, setForceCenter] = useState(false);
     const filteredData = props.catData.filter((x, index) => index % 3 === 0);
     const [buttonClicked, setButtonClicked] = useState(false);
-    const called = useRef(false);
+    const dragContainerRef = useRef<HTMLDivElement>(null);
 
-    function getDragConstraints() {
-        if (!distanceX || !distanceY) {
-            return;
+    const dragControls = useDragControls();
+    const animationControls = useAnimationControls();
+
+    const dragRef = useRef<HTMLDivElement>(null);
+
+    function getContainerStyle() {
+        if (!dimensions) {
+            return undefined;
         }
 
         return {
-            top: -distanceY,
-            right: distanceX,
-            bottom: distanceY,
-            left: -distanceX,
+            height: `${2 * dimensions.x - window.innerHeight}px`,
+            width: `${2 * dimensions.y - window.innerWidth}px`,
         };
-    }
-
-    function getTransform() {
-        if (called.current) {
-            return;
-        }
-
-        called.current = true;
-        if (!distanceX || !distanceY) {
-            return undefined;
-        }
-        return { x: -distanceX, y: -distanceY };
     }
 
     function handleButtonClick() {
         setButtonClicked((x) => !x);
 
+        // Wait until Grid layout is finished.
+        // TODO: better call this as a callback.
         setTimeout(() => {
-            // console.log("remeasure");
             manualRemeasure();
-            // setKey((x) => x + 1);
-
-            // setForceCenter(true);
         }, 1000);
+
+        animationControls.start({ x: 0, y: 0 });
     }
 
-    function onResetEnd() {
-        console.log("reset end");
-        setKey((x) => x + 1);
-        setForceCenter(false);
-    }
+    const [canvasStyle, setCanvasStyle] = useState<{ size?: string; transform?: string }>({ size: undefined, transform: undefined });
+    useEffect(() => {
+        const canvasSize = 10000;
+        const x = `${-((canvasSize - window.innerWidth) / 2)}px`;
+        const y = `${-((canvasSize - window.innerHeight) / 2)}px`;
 
-    const centerX = `${-((10000 - window.innerWidth) / 2)}px`;
-    const centerY = `${-((10000 - window.innerHeight) / 2)}px`;
+        setCanvasStyle({
+            size: `${canvasSize}px`,
+            transform: `translate(${x}, ${y})`,
+        });
+    }, []);
 
     return (
-        <motion.div className={cn("h-screen overflow-hidden", { invisible: !distanceX || !distanceY })}>
-            {/* use anmiate={} instead of style={}? */}
+        <div className={cn("h-screen overflow-hidden", { invisible: !dimensions })}>
             <div
                 style={{
-                    width: "10000px",
-                    height: "10000px",
-                    transform: `translate(${centerX}, ${centerY})`,
+                    width: canvasStyle.size,
+                    height: canvasStyle.size,
+                    transform: canvasStyle.transform,
                 }}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center "
             >
-                <motion.div
-                    key={`${key}`}
-                    drag
-                    dragConstraints={getDragConstraints()}
-                    // className={cn({ "!translate-x-0 !translate-y-0 transition-transform": forceCenter })}
-                    // onTransitionEnd={() => onResetEnd()}
+                <div
+                    className="flex items-center justify-center"
+                    style={getContainerStyle()}
+                    ref={dragContainerRef}
                 >
-                    <div
-                        className="flex"
-                        ref={ref}
+                    <motion.div
+                        key={`${key}`} // update key on resize to kill running drag animatons?
+                        drag
+                        dragConstraints={dragContainerRef}
+                        dragControls={dragControls}
+                        ref={dragRef}
+                        animate={animationControls}
+                        transition={{ type: "spring", duration: 0.5, bounce: 0.1 }}
                     >
-                        <Grid catData={buttonClicked ? filteredData : props.catData} />
-                    </div>
-                </motion.div>
+                        <div
+                            className="flex"
+                            ref={ref}
+                        >
+                            <Grid catData={buttonClicked ? filteredData : props.catData} />
+                        </div>
+                    </motion.div>
+                </div>
             </div>
             <button
                 className="fixed bottom-10 left-10 size-40 bg-lime-500"
@@ -101,6 +98,6 @@ export default function Canvas(props: CanvasProps) {
             >
                 Filter
             </button>
-        </motion.div>
+        </div>
     );
 }

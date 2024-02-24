@@ -13,15 +13,18 @@ export default function Grid(props: GridProps) {
     const numRows = numCols;
 
     return (
-        <div
+        <motion.div
             className="grid gap-16 p-16"
             style={{ gridTemplateRows: `repeat(${numRows}, auto)`, gridTemplateColumns: `repeat(${numCols}, auto)` }}
+            layoutRoot
+            layout
         >
             {props.catData.map((item) => (
                 <motion.div
                     key={item.id}
                     className="size-60 overflow-hidden rounded-md"
                     layout
+                    initial={false}
                 >
                     <Image
                         src={item.url}
@@ -33,6 +36,6 @@ export default function Grid(props: GridProps) {
                     />
                 </motion.div>
             ))}
-        </div>
+        </motion.div>
     );
 }
