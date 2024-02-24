@@ -4,7 +4,7 @@ import Grid from "./Grid";
 async function getData() {
     const key = "live_QuSvCn7Bhyz3IMvM5df0AWtkBml4pVsxDPkIib9zUE1fjx1zMGjCKQc3RtYX2EtR";
     const limit = "100";
-    const breeds = "beng,abys,sava,norw";
+    const breeds = "beng,abys,sava,norw,ragd";
 
     // &breed_ids=${breeds}
     // attach_image=1 <- should i use this?

@@ -6,6 +6,7 @@ import { cn } from "./lib/utils";
 import { useEffect, useRef, useState } from "react";
 import Grid from "./Grid";
 import { CatData } from "./page";
+import Filters from "./Filters";
 
 export interface CanvasProps {
     catData: CatData[];
@@ -16,7 +17,10 @@ const RESIZE_DEBOUNCE_MS = 500;
 export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();
     const [key, setKey] = useState(0);
-    const filteredData = props.catData.filter((x, index) => index % 3 === 0);
+
+    // const filteredData = props.catData.filter((x, index) => index % 3 === 0);
+    const [filteredData, setFilteredData] = useState(props.catData);
+
     const [buttonClicked, setButtonClicked] = useState(false);
     const dragContainerRef = useRef<HTMLDivElement>(null);
     const dragControls = useDragControls();
@@ -25,8 +29,6 @@ export default function Canvas(props: CanvasProps) {
     const timeout = useRef<NodeJS.Timeout | null>(null);
 
     const [canvasStyle, setCanvasStyle] = useState<{ size?: string; transform?: string }>({ size: undefined, transform: undefined });
-
-    console.log(dimensions);
 
     useEffect(() => {
         function updateCanvasStyle() {
@@ -69,12 +71,10 @@ export default function Canvas(props: CanvasProps) {
         };
     }
 
-    function handleButtonClick() {
-        setButtonClicked((x) => !x);
+    function handleDataFiltered(data: CatData[]) {
+        setFilteredData(data);
         animationControls.start({ x: 0, y: 0 });
     }
-
-    console.log(dimensions);
 
     return (
         <div className={cn("h-screen overflow-hidden", { invisible: !dimensions })}>
@@ -105,19 +105,18 @@ export default function Canvas(props: CanvasProps) {
                             ref={ref}
                         >
                             <Grid
-                                catData={buttonClicked ? filteredData : props.catData}
+                                catData={filteredData}
                                 onLayoutAnimationComplete={() => manualRemeasure()}
                             />
                         </div>
                     </motion.div>
                 </div>
             </div>
-            <button
-                className="fixed bottom-10 left-10 size-40 bg-lime-500"
-                onClick={handleButtonClick}
-            >
-                Filter
-            </button>
+
+            <Filters
+                data={props.catData}
+                onDataFiltered={handleDataFiltered}
+            />
         </div>
     );
 }
