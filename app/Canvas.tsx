@@ -11,18 +11,50 @@ export interface CanvasProps {
     catData: CatData[];
 }
 
+const RESIZE_DEBOUNCE_MS = 500;
+
 export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();
     const [key, setKey] = useState(0);
-
     const filteredData = props.catData.filter((x, index) => index % 3 === 0);
     const [buttonClicked, setButtonClicked] = useState(false);
     const dragContainerRef = useRef<HTMLDivElement>(null);
-
     const dragControls = useDragControls();
     const animationControls = useAnimationControls();
-
     const dragRef = useRef<HTMLDivElement>(null);
+    const timeout = useRef<NodeJS.Timeout | null>(null);
+
+    const [canvasStyle, setCanvasStyle] = useState<{ size?: string; transform?: string }>({ size: undefined, transform: undefined });
+
+    useEffect(() => {
+        function updateCanvasStyle() {
+            const canvasSize = 10000;
+            const x = `${-((canvasSize - window.innerWidth) / 2)}px`;
+            const y = `${-((canvasSize - window.innerHeight) / 2)}px`;
+
+            setCanvasStyle({
+                size: `${canvasSize}px`,
+                transform: `translate(${x}, ${y})`,
+            });
+        }
+
+        function onResize() {
+            if (timeout.current) {
+                clearTimeout(timeout.current);
+            }
+            timeout.current = setTimeout(() => {
+                setKey((x) => x + 1);
+                updateCanvasStyle();
+            }, RESIZE_DEBOUNCE_MS);
+        }
+
+        updateCanvasStyle();
+        window.addEventListener("resize", onResize);
+
+        return () => {
+            window.removeEventListener("resize", onResize);
+        };
+    }, []);
 
     function getContainerStyle() {
         if (!dimensions) {
@@ -47,18 +79,6 @@ export default function Canvas(props: CanvasProps) {
         animationControls.start({ x: 0, y: 0 });
     }
 
-    const [canvasStyle, setCanvasStyle] = useState<{ size?: string; transform?: string }>({ size: undefined, transform: undefined });
-    useEffect(() => {
-        const canvasSize = 10000;
-        const x = `${-((canvasSize - window.innerWidth) / 2)}px`;
-        const y = `${-((canvasSize - window.innerHeight) / 2)}px`;
-
-        setCanvasStyle({
-            size: `${canvasSize}px`,
-            transform: `translate(${x}, ${y})`,
-        });
-    }, []);
-
     return (
         <div className={cn("h-screen overflow-hidden", { invisible: !dimensions })}>
             <div
@@ -75,7 +95,7 @@ export default function Canvas(props: CanvasProps) {
                     ref={dragContainerRef}
                 >
                     <motion.div
-                        key={`${key}`} // update key on resize to kill running drag animatons?
+                        key={`${key}`} // update key on resize to kill running drag animaton
                         drag
                         dragConstraints={dragContainerRef}
                         dragControls={dragControls}
