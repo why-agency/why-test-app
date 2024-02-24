@@ -26,6 +26,8 @@ export default function Canvas(props: CanvasProps) {
 
     const [canvasStyle, setCanvasStyle] = useState<{ size?: string; transform?: string }>({ size: undefined, transform: undefined });
 
+    console.log(dimensions);
+
     useEffect(() => {
         function updateCanvasStyle() {
             const canvasSize = 10000;
@@ -62,8 +64,8 @@ export default function Canvas(props: CanvasProps) {
         }
 
         return {
-            height: `${2 * dimensions.x - window.innerHeight}px`,
-            width: `${2 * dimensions.y - window.innerWidth}px`,
+            width: `${2 * dimensions.x - window.innerWidth}px`,
+            height: `${2 * dimensions.y - window.innerHeight}px`,
         };
     }
 
@@ -71,6 +73,8 @@ export default function Canvas(props: CanvasProps) {
         setButtonClicked((x) => !x);
         animationControls.start({ x: 0, y: 0 });
     }
+
+    console.log(dimensions);
 
     return (
         <div className={cn("h-screen overflow-hidden", { invisible: !dimensions })}>
