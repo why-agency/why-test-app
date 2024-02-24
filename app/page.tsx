@@ -35,8 +35,6 @@ export interface CatData {
 export default async function CatGrid() {
     const catData: CatData[] = await getData();
 
-    console.log(catData[0]);
-
     return (
         <main>
             <Canvas catData={catData} />

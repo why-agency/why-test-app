@@ -3,14 +3,26 @@
 import { motion } from "framer-motion";
 import { CatData } from "./page";
 import Image from "next/image";
+import { useRef } from "react";
 
 export interface GridProps {
     catData: CatData[];
+    onLayoutAnimationComplete: () => void;
 }
 
 export default function Grid(props: GridProps) {
     const numCols = Math.ceil(Math.sqrt(props.catData.length));
     const numRows = numCols;
+    const timeout = useRef<NodeJS.Timeout | null>(null);
+
+    function handleLayoutComplete() {
+        if (timeout.current) {
+            clearTimeout(timeout.current);
+        }
+        timeout.current = setTimeout(() => {
+            props.onLayoutAnimationComplete();
+        }, 10);
+    }
 
     return (
         <motion.div
@@ -24,7 +36,7 @@ export default function Grid(props: GridProps) {
                     key={item.id}
                     className="size-60 overflow-hidden rounded-md"
                     layout
-                    initial={false}
+                    onLayoutAnimationComplete={handleLayoutComplete}
                 >
                     <Image
                         src={item.url}

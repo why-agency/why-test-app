@@ -69,13 +69,6 @@ export default function Canvas(props: CanvasProps) {
 
     function handleButtonClick() {
         setButtonClicked((x) => !x);
-
-        // Wait until Grid layout is finished.
-        // TODO: better call this as a callback.
-        setTimeout(() => {
-            manualRemeasure();
-        }, 1000);
-
         animationControls.start({ x: 0, y: 0 });
     }
 
@@ -95,7 +88,7 @@ export default function Canvas(props: CanvasProps) {
                     ref={dragContainerRef}
                 >
                     <motion.div
-                        key={`${key}`} // update key on resize to kill running drag animaton
+                        key={`${key}`}
                         drag
                         dragConstraints={dragContainerRef}
                         dragControls={dragControls}
@@ -107,7 +100,10 @@ export default function Canvas(props: CanvasProps) {
                             className="flex"
                             ref={ref}
                         >
-                            <Grid catData={buttonClicked ? filteredData : props.catData} />
+                            <Grid
+                                catData={buttonClicked ? filteredData : props.catData}
+                                onLayoutAnimationComplete={() => manualRemeasure()}
+                            />
                         </div>
                     </motion.div>
                 </div>
