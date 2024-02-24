@@ -19,9 +19,9 @@ export default function Grid(props: GridProps) {
         >
             {props.catData.map((item) => (
                 <motion.div
-                    layout
                     key={item.id}
                     className="size-60 overflow-hidden rounded-md"
+                    layout
                 >
                     <Image
                         src={item.url}

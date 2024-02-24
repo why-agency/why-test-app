@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import useDimensions from "./hooks/useDimensions";
 import { cn } from "./lib/utils";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Grid from "./Grid";
 import { CatData } from "./page";
 
@@ -21,6 +21,7 @@ export default function Canvas(props: CanvasProps) {
     const [forceCenter, setForceCenter] = useState(false);
     const filteredData = props.catData.filter((x, index) => index % 3 === 0);
     const [buttonClicked, setButtonClicked] = useState(false);
+    const called = useRef(false);
 
     function getDragConstraints() {
         if (!distanceX || !distanceY) {
@@ -36,6 +37,11 @@ export default function Canvas(props: CanvasProps) {
     }
 
     function getTransform() {
+        if (called.current) {
+            return;
+        }
+
+        called.current = true;
         if (!distanceX || !distanceY) {
             return undefined;
         }
@@ -46,10 +52,12 @@ export default function Canvas(props: CanvasProps) {
         setButtonClicked((x) => !x);
 
         setTimeout(() => {
-            console.log("remeasure");
+            // console.log("remeasure");
             manualRemeasure();
-            setForceCenter(true);
-        }, 200);
+            // setKey((x) => x + 1);
+
+            // setForceCenter(true);
+        }, 1000);
     }
 
     function onResetEnd() {
@@ -58,16 +66,26 @@ export default function Canvas(props: CanvasProps) {
         setForceCenter(false);
     }
 
+    const centerX = `${-((10000 - window.innerWidth) / 2)}px`;
+    const centerY = `${-((10000 - window.innerHeight) / 2)}px`;
+
     return (
         <motion.div className={cn("h-screen overflow-hidden", { invisible: !distanceX || !distanceY })}>
             {/* use anmiate={} instead of style={}? */}
-            <motion.div style={getTransform()}>
+            <div
+                style={{
+                    width: "10000px",
+                    height: "10000px",
+                    transform: `translate(${centerX}, ${centerY})`,
+                }}
+                className="flex items-center justify-center"
+            >
                 <motion.div
                     key={`${key}`}
                     drag
                     dragConstraints={getDragConstraints()}
-                    className={cn({ "!translate-x-0 !translate-y-0 transition-transform": forceCenter })}
-                    onTransitionEnd={() => onResetEnd()}
+                    // className={cn({ "!translate-x-0 !translate-y-0 transition-transform": forceCenter })}
+                    // onTransitionEnd={() => onResetEnd()}
                 >
                     <div
                         className="flex"
@@ -76,7 +94,7 @@ export default function Canvas(props: CanvasProps) {
                         <Grid catData={buttonClicked ? filteredData : props.catData} />
                     </div>
                 </motion.div>
-            </motion.div>
+            </div>
             <button
                 className="fixed bottom-10 left-10 size-40 bg-lime-500"
                 onClick={handleButtonClick}
