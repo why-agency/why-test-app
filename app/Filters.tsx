@@ -1,49 +1,61 @@
 import { useState } from "react";
 import { CatData } from "./page";
+import { cn, hasCommonElement, removeElementFromArray } from "./lib/utils";
 
 export interface FiltersProps {
     data: CatData[];
     onDataFiltered: (data: CatData[]) => void;
 }
 
+export const breeds = [
+    { id: "beng", name: "Bengal" },
+    { id: "abys", name: "Abyssinian" },
+    { id: "norw", name: "Norwegian Forest Cat" },
+    { id: "ragd", name: "Ragdoll" },
+];
+
 export default function Filters(props: FiltersProps) {
-    // const [filteredData, setFilteredData] = useState<CatData[]>(props.data);
-    const [isFiltered, setIsFiltered] = useState(false);
+    const [activeBreeds, setActiveBreeds] = useState<string[]>([]);
 
     function filterByBreed(breedId: string) {
-        if (isFiltered) {
+        const breedsUpdate: string[] = activeBreeds.includes(breedId)
+            ? removeElementFromArray(activeBreeds, breedId)
+            : [...activeBreeds, breedId];
+
+        setActiveBreeds(breedsUpdate);
+
+        if (!breedsUpdate.length) {
             props.onDataFiltered(props.data);
-            setIsFiltered(false);
             return;
         }
 
-        setIsFiltered(true);
         const filteredData = props.data.filter((cat: CatData) => {
-            return cat.breeds.map((breed) => breed.id).indexOf(breedId) !== -1;
+            return hasCommonElement(
+                cat.breeds.map((b) => b.id),
+                breedsUpdate,
+            );
         });
         props.onDataFiltered(filteredData);
     }
 
+    function isActive(breedId: string) {
+        if (!activeBreeds.length) {
+            return true;
+        }
+        return activeBreeds.includes(breedId);
+    }
+
     return (
-        <div className="fixed bottom-10 left-10 h-10">
-            <button
-                onClick={() => filterByBreed("beng")}
-                className=" h-full bg-lime-500"
-            >
-                Filter for beng
-            </button>
-            <button
-                onClick={() => filterByBreed("ragd")}
-                className=" h-full bg-cyan-500"
-            >
-                Filter for ragd
-            </button>
-            <button
-                onClick={() => filterByBreed("norw")}
-                className="h-full bg-pink-500"
-            >
-                Filter for norw
-            </button>
+        <div className="fixed bottom-10 left-10 flex h-10 gap-4">
+            {breeds.map((breed) => (
+                <button
+                    key={breed.id}
+                    onClick={() => filterByBreed(breed.id)}
+                    className={cn("h-full bg-pink-500", { "bg-lime-500": isActive(breed.id) })}
+                >
+                    {breed.name}
+                </button>
+            ))}
         </div>
     );
 }

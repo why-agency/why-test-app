@@ -1,12 +1,11 @@
 import Canvas from "./Canvas";
-import Grid from "./Grid";
 import { sortCatsById } from "./lib/utils";
 
 async function getData() {
     const key = "live_QuSvCn7Bhyz3IMvM5df0AWtkBml4pVsxDPkIib9zUE1fjx1zMGjCKQc3RtYX2EtR";
     const order = "ASC";
     const limit = "100";
-    const breeds = "beng,abys,sava,norw,ragd";
+    const breeds = "beng,abys,norw,ragd";
 
     const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${breeds}&order=${order}`, {
         headers: { "x-api-key": key },
