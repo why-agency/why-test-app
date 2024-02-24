@@ -1,21 +1,19 @@
 "use client";
 
-import { DragControls, animationControls, motion, useAnimationControls, useDragControls } from "framer-motion";
+import { motion } from "framer-motion";
 import useDimensions from "./hooks/useDimensions";
 import { cn } from "./lib/utils";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Grid from "./Grid";
+import { CatData } from "./page";
 
-export interface CanvasProps {}
+export interface CanvasProps {
+    catData: CatData[];
+}
 
 export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();
-    const animationControls = useAnimationControls();
     const [key, setKey] = useState(0);
-
-    const prevX = useRef(0);
-    const prevY = useRef(0);
-    const dragAnimating = useRef(false);
 
     let distanceX = !!dimensions && dimensions.x / 2 - window.innerWidth / 2;
     let distanceY = !!dimensions && dimensions.y / 2 - window.innerHeight / 2;
@@ -61,17 +59,10 @@ export default function Canvas(props: CanvasProps) {
         setForceCenter(false);
     }
 
-    // useEffect(() => {
-    //     if (!forceCenter) {
-    //         return;
-    //     }
-    //     setKey((x) => x + 1);
-    //     setForceCenter(false);
-    // }, [forceCenter]);
-
     return (
         <motion.div className={cn("h-screen overflow-hidden", { invisible: !distanceX || !distanceY })}>
-            <motion.div animate={getTransform()}>
+            {/* use anmiate={} instead of style={}? */}
+            <motion.div style={getTransform()}>
                 <motion.div
                     key={`${key}`}
                     drag
@@ -83,7 +74,10 @@ export default function Canvas(props: CanvasProps) {
                         className="flex"
                         ref={ref}
                     >
-                        <Grid small={gridSmall} />
+                        <Grid
+                            small={gridSmall}
+                            catData={props.catData}
+                        />
                     </div>
                 </motion.div>
             </motion.div>
