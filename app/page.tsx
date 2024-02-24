@@ -9,7 +9,7 @@ async function getData() {
     // &breed_ids=${breeds}
     // attach_image=1 <- should i use this?
 
-    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=100&has_breeds=1&order=ASC`, {
+    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=100&breed_ids=${breeds}&order=ASC`, {
         headers: { "x-api-key": key },
         // next: { revalidate: 14400 }, // 4 hours
     });

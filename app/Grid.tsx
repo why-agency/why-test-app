@@ -12,7 +12,6 @@ export interface GridProps {
 
 export default function Grid(props: GridProps) {
     const numCols = Math.ceil(Math.sqrt(props.catData.length));
-    const numRows = numCols;
     const timeout = useRef<NodeJS.Timeout | null>(null);
 
     function handleLayoutComplete() {
@@ -27,7 +26,7 @@ export default function Grid(props: GridProps) {
     return (
         <motion.div
             className="grid gap-16 p-16"
-            style={{ gridTemplateRows: `repeat(${numRows}, auto)`, gridTemplateColumns: `repeat(${numCols}, auto)` }}
+            style={{ gridTemplateColumns: `repeat(${numCols}, auto)` }}
             layoutRoot
             layout
         >
