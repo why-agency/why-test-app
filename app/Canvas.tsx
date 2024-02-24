@@ -19,10 +19,8 @@ export default function Canvas(props: CanvasProps) {
     let distanceY = !!dimensions && dimensions.y / 2 - window.innerHeight / 2;
 
     const [forceCenter, setForceCenter] = useState(false);
-
-    // Only for development/testing purpose
-    // Simulation of animation behavior if dataset gets 'smaller' after filtering
-    const [gridSmall, setGridSmall] = useState(false);
+    const filteredData = props.catData.filter((x, index) => index % 3 === 0);
+    const [buttonClicked, setButtonClicked] = useState(false);
 
     function getDragConstraints() {
         if (!distanceX || !distanceY) {
@@ -44,8 +42,9 @@ export default function Canvas(props: CanvasProps) {
         return { x: -distanceX, y: -distanceY };
     }
 
-    function handleContentChange() {
-        setGridSmall((x) => !x);
+    function handleButtonClick() {
+        setButtonClicked((x) => !x);
+
         setTimeout(() => {
             console.log("remeasure");
             manualRemeasure();
@@ -74,16 +73,13 @@ export default function Canvas(props: CanvasProps) {
                         className="flex"
                         ref={ref}
                     >
-                        <Grid
-                            small={gridSmall}
-                            catData={props.catData}
-                        />
+                        <Grid catData={buttonClicked ? filteredData : props.catData} />
                     </div>
                 </motion.div>
             </motion.div>
             <button
                 className="fixed bottom-10 left-10 size-40 bg-lime-500"
-                onClick={handleContentChange}
+                onClick={handleButtonClick}
             >
                 Filter
             </button>
