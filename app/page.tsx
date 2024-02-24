@@ -1,24 +1,24 @@
 import Canvas from "./Canvas";
 import Grid from "./Grid";
+import { sortCatsById } from "./lib/utils";
 
 async function getData() {
     const key = "live_QuSvCn7Bhyz3IMvM5df0AWtkBml4pVsxDPkIib9zUE1fjx1zMGjCKQc3RtYX2EtR";
+    const order = "ASC";
     const limit = "100";
     const breeds = "beng,abys,sava,norw,ragd";
 
-    // &breed_ids=${breeds}
-    // attach_image=1 <- should i use this?
-
-    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=100&breed_ids=${breeds}&order=ASC`, {
+    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${breeds}&order=${order}`, {
         headers: { "x-api-key": key },
-        // next: { revalidate: 14400 }, // 4 hours
+        next: { revalidate: 14400 }, // 4 hours
     });
 
     if (!res.ok) {
         throw new Error("Failed to fetch data");
     }
 
-    return res.json();
+    const catData: CatData[] = await res.json();
+    return sortCatsById(catData);
 }
 
 export interface Breed {
@@ -33,7 +33,7 @@ export interface CatData {
 }
 
 export default async function CatGrid() {
-    const catData: CatData[] = await getData();
+    let catData: CatData[] = await getData();
 
     return (
         <main>
