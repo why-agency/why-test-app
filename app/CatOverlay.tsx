@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Breed, CatData } from "./types";
+import { Breed, CatData } from "../types/types";
 import resolveConfig from "tailwindcss/resolveConfig";
 import config from "@/tailwind.config";
 

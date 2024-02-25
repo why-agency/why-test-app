@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { hasCommonElement } from "@/lib/utils";
-import { CatData } from "./types";
+import { cn, hasCommonElement } from "@/lib/utils";
+import { CatData } from "../types/types";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const breeds = [
@@ -13,13 +13,13 @@ const breeds = [
 export interface FiltersProps {
     data: CatData[];
     onDataFiltered: (data: CatData[]) => void;
+    className?: string;
 }
 
 export default function Filters(props: FiltersProps) {
     const [activeBreeds, setActiveBreeds] = useState<string[]>([]);
 
     function onBreedsChange(breedIds: string[]) {
-
         const filteredData = !breedIds.length
             ? props.data
             : props.data.filter((cat: CatData) => {
@@ -33,7 +33,7 @@ export default function Filters(props: FiltersProps) {
     }
 
     return (
-        <div className="pointer-events-none fixed bottom-10 flex w-full justify-center">
+        <div className={cn("pointer-events-none fixed bottom-10 flex w-full justify-center", props.className)}>
             <div className="pointer-events-auto  flex rounded-lg bg-neutral-300 p-1">
                 <ToggleGroup
                     type="multiple"

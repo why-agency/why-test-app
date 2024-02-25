@@ -3,10 +3,12 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { RefObject, useRef } from "react";
-import { CatData } from "./types";
-import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
+import { CatData } from "../types/types";
 import { cn } from "@/lib/utils";
 import CatOverlay from "./CatOverlay";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
+import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
+import { DialogContent } from "@/components/ui/dialog";
 
 export interface CatGridProps {
     catData: CatData[];
@@ -15,8 +17,9 @@ export interface CatGridProps {
 }
 
 export default function CatGrid(props: CatGridProps) {
-    const numCols = Math.ceil(Math.sqrt(props.catData.length));
     const timeout = useRef<NodeJS.Timeout | null>(null);
+    const isDesktop = useIsDesktop();
+    let numCols = isDesktop ? Math.ceil(Math.sqrt(props.catData.length)) : 2;
 
     function handleLayoutComplete() {
         if (timeout.current) {
@@ -37,7 +40,7 @@ export default function CatGrid(props: CatGridProps) {
 
     return (
         <motion.div
-            className="grid gap-16 p-16"
+            className="grid grid-cols-2 gap-8 p-8 md:gap-16 md:p-16"
             style={{ gridTemplateColumns: `repeat(${numCols}, auto)` }}
             layoutRoot
             layout
@@ -45,11 +48,28 @@ export default function CatGrid(props: CatGridProps) {
             {props.catData.map((item) => (
                 <motion.div
                     key={item.id}
-                    className="size-60 overflow-hidden rounded-md"
+                    className="size-32 overflow-hidden rounded-md md:size-60"
                     layout
                     onLayoutAnimationComplete={handleLayoutComplete}
                 >
-                    <ResponsiveDialog content={<CatOverlay data={item} />}>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Image
+                                src={item.url}
+                                width={240}
+                                height={240}
+                                alt={`${item.breeds[0].name} cat`}
+                                className={cn("size-full cursor-pointer object-cover")}
+                                draggable={false}
+                                onClick={handleItemClick}
+                            />
+                        </DialogTrigger>
+                        <DialogContent className="overflow-auto sm:max-w-[500px] 2xl:max-w-[800px]">
+                            <CatOverlay data={item} />
+                        </DialogContent>
+                    </Dialog>
+                    {/* <ResponsiveDialog content={}></ResponsiveDialog> */}
+                    {/* <ResponsiveDialog content={<CatOverlay data={item} />}>
                         <Image
                             src={item.url}
                             width={240}
@@ -59,7 +79,7 @@ export default function CatGrid(props: CatGridProps) {
                             draggable={false}
                             onClick={handleItemClick}
                         />
-                    </ResponsiveDialog>
+                    </ResponsiveDialog> */}
                 </motion.div>
             ))}
         </motion.div>

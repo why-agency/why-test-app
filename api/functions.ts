@@ -1,4 +1,4 @@
-import { CatData } from "../app/types";
+import { CatData } from "../types/types";
 
 function sortCatsById(data: CatData[]) {
     return data.sort((a, b) => {

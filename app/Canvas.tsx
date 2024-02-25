@@ -5,11 +5,12 @@ import useDimensions from "../hooks/useDimensions";
 import { useEffect, useRef, useState } from "react";
 import CatGrid from "./CatGrid";
 import Filters from "./Filters";
-import { CatData } from "./types";
+import { CatData } from "../types/types";
 import { cn } from "@/lib/utils";
 
 export interface CanvasProps {
     catData: CatData[];
+    className?: string;
 }
 
 const RESIZE_DEBOUNCE_MS = 500;
@@ -18,7 +19,6 @@ const CANVAS_SIZE = 10000;
 export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();
     const [key, setKey] = useState(0);
-
     const [filteredData, setFilteredData] = useState(props.catData);
     const dragContainerRef = useRef<HTMLDivElement>(null);
     const dragControls = useDragControls();
@@ -75,7 +75,7 @@ export default function Canvas(props: CanvasProps) {
     }
 
     return (
-        <div className={cn("h-screen overflow-hidden", { invisible: !dimensions })}>
+        <div className={cn("h-screen overflow-hidden", { invisible: !dimensions }, props.className)}>
             <div
                 style={{
                     width: canvasStyle.size,
@@ -116,6 +116,7 @@ export default function Canvas(props: CanvasProps) {
             </div>
 
             <Filters
+                className={"max-md:hidden"}
                 data={props.catData}
                 onDataFiltered={handleDataFiltered}
             />
