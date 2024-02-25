@@ -3,7 +3,7 @@
 import { motion, useAnimationControls, useDragControls } from "framer-motion";
 import useDimensions from "../hooks/useDimensions";
 import { useEffect, useRef, useState } from "react";
-import Grid from "./Grid";
+import CatGrid from "./CatGrid";
 import Filters from "./Filters";
 import { CatData } from "./types";
 import { cn } from "@/lib/utils";
@@ -101,7 +101,7 @@ export default function Canvas(props: CanvasProps) {
                             className="flex"
                             ref={ref}
                         >
-                            <Grid
+                            <CatGrid
                                 catData={filteredData}
                                 onLayoutAnimationComplete={() => manualRemeasure()}
                             />
