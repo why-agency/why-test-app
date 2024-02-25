@@ -35,7 +35,7 @@ export default function Filters(props: FiltersProps) {
 
     return (
         <div className="pointer-events-none fixed bottom-10 flex w-full justify-center">
-            <div className="pointer-events-auto  flex rounded-lg bg-neutral-200 p-1">
+            <div className="pointer-events-auto  flex rounded-lg bg-neutral-300 p-1">
                 <ToggleGroup
                     type="multiple"
                     value={activeBreeds}
