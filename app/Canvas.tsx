@@ -13,6 +13,7 @@ export interface CanvasProps {
 }
 
 const RESIZE_DEBOUNCE_MS = 500;
+const CANVAS_SIZE = 10000;
 
 export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();
@@ -29,7 +30,7 @@ export default function Canvas(props: CanvasProps) {
 
     useEffect(() => {
         function updateCanvasStyle() {
-            const canvasSize = 10000;
+            const canvasSize = CANVAS_SIZE;
             const x = `${-((canvasSize - window.innerWidth) / 2)}px`;
             const y = `${-((canvasSize - window.innerHeight) / 2)}px`;
 

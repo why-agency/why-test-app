@@ -31,16 +31,8 @@ export function ResponsiveDialog(props: ResponsiveDialogProps) {
                 open={open}
                 onOpenChange={setOpen}
             >
-                <DialogTrigger asChild>
-                    {props.children}
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Edit profile</DialogTitle>
-                        <DialogDescription>Make changes to your profile here. Click save when you're done.</DialogDescription>
-                    </DialogHeader>
-                    {props.content}
-                </DialogContent>
+                <DialogTrigger asChild>{props.children}</DialogTrigger>
+                <DialogContent className="overflow-auto sm:max-w-[500px] 2xl:max-w-[800px]">{props.content}</DialogContent>
             </Dialog>
         );
     }

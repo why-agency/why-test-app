@@ -6,6 +6,7 @@ import { RefObject, useRef } from "react";
 import { CatData } from "./types";
 import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
 import { cn } from "@/lib/utils";
+import CatOverlay from "./CatOverlay";
 
 export interface CatGridProps {
     catData: CatData[];
@@ -48,7 +49,7 @@ export default function CatGrid(props: CatGridProps) {
                     layout
                     onLayoutAnimationComplete={handleLayoutComplete}
                 >
-                    <ResponsiveDialog content={<></>}>
+                    <ResponsiveDialog content={<CatOverlay data={item} />}>
                         <Image
                             src={item.url}
                             width={240}
@@ -57,6 +58,7 @@ export default function CatGrid(props: CatGridProps) {
                             className={cn("size-full cursor-pointer object-cover")}
                             draggable={false}
                             onClick={handleItemClick}
+                            sizes="(max-width: 768px) 100vw, 33vw"	
                         />
                     </ResponsiveDialog>
                 </motion.div>
