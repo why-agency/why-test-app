@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { cn, hasCommonElement, removeElementFromArray } from "@/lib/utils";
+import { hasCommonElement } from "@/lib/utils";
 import { CatData } from "./types";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const breeds = [
     { id: "beng", name: "Bengal" },
@@ -17,45 +18,39 @@ export interface FiltersProps {
 export default function Filters(props: FiltersProps) {
     const [activeBreeds, setActiveBreeds] = useState<string[]>([]);
 
-    function filterByBreed(breedId: string) {
-        const breedsUpdate: string[] = activeBreeds.includes(breedId)
-            ? removeElementFromArray(activeBreeds, breedId)
-            : [...activeBreeds, breedId];
+    function onBreedsChange(breedIds: string[]) {
+        console.log(breedIds);
 
-        setActiveBreeds(breedsUpdate);
-
-        if (!breedsUpdate.length) {
-            props.onDataFiltered(props.data);
-            return;
-        }
-
-        const filteredData = props.data.filter((cat: CatData) => {
-            return hasCommonElement(
-                cat.breeds.map((b) => b.id),
-                breedsUpdate,
-            );
-        });
+        const filteredData = !breedIds.length
+            ? props.data
+            : props.data.filter((cat: CatData) => {
+                  return hasCommonElement(
+                      cat.breeds.map((b) => b.id),
+                      breedIds,
+                  );
+              });
+        setActiveBreeds(breedIds);
         props.onDataFiltered(filteredData);
     }
 
-    function isActive(breedId: string) {
-        if (!activeBreeds.length) {
-            return true;
-        }
-        return activeBreeds.includes(breedId);
-    }
-
     return (
-        <div className="fixed bottom-10 left-10 flex h-10 gap-4">
-            {breeds.map((breed) => (
-                <button
-                    key={breed.id}
-                    onClick={() => filterByBreed(breed.id)}
-                    className={cn("h-full bg-pink-500", { "bg-lime-500": isActive(breed.id) })}
+        <div className="pointer-events-none fixed bottom-10 flex w-full justify-center">
+            <div className="pointer-events-auto  flex rounded-lg bg-neutral-200 p-1">
+                <ToggleGroup
+                    type="multiple"
+                    value={activeBreeds}
+                    onValueChange={(breedIds) => onBreedsChange(breedIds)}
                 >
-                    {breed.name}
-                </button>
-            ))}
+                    {breeds.map((breed) => (
+                        <ToggleGroupItem
+                            key={breed.id}
+                            value={breed.id}
+                        >
+                            {breed.name}
+                        </ToggleGroupItem>
+                    ))}
+                </ToggleGroup>
+            </div>
         </div>
     );
 }
