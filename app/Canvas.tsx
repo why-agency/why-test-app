@@ -98,6 +98,7 @@ export default function Canvas(props: CanvasProps) {
                         transition={{ type: "spring", duration: 0.5, bounce: 0.1 }}
                         onDragStart={() => (isDraggingRef.current = true)}
                         onDragEnd={() => (isDraggingRef.current = false)}
+                        className="cursor-grab"
                     >
                         <div
                             className="flex"
