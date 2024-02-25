@@ -1,12 +1,12 @@
 "use client";
 
 import { motion, useAnimationControls, useDragControls } from "framer-motion";
-import useDimensions from "./hooks/useDimensions";
-import { cn } from "./lib/utils";
+import useDimensions from "../hooks/useDimensions";
 import { useEffect, useRef, useState } from "react";
 import Grid from "./Grid";
 import Filters from "./Filters";
 import { CatData } from "./types";
+import { cn } from "@/lib/utils";
 
 export interface CanvasProps {
     catData: CatData[];

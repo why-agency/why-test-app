@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { cn, hasCommonElement, removeElementFromArray } from "./lib/utils";
+import { cn, hasCommonElement, removeElementFromArray } from "@/lib/utils";
 import { CatData } from "./types";
 
 const breeds = [

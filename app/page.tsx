@@ -1,5 +1,5 @@
 import Canvas from "./Canvas";
-import { getData } from "./api/functions";
+import { getData } from "../api/functions";
 import { CatData } from "./types";
 
 export default async function CatGrid() {
