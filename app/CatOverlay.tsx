@@ -17,6 +17,8 @@ const notFoundBreedData: Breed = {
     wikipedia_url: "",
 };
 
+// sizes={`(max-width: ${breakpoints.sm}) 600px, (max-width: ${breakpoints.md}) 700px, (max-width: ${breakpoints.lg}) 400px, 700px`}
+
 export default function CatOverlay(props: CatOverlayProps) {
     const breed = props.data.breeds.length ? props.data.breeds[0] : notFoundBreedData;
 
@@ -28,7 +30,7 @@ export default function CatOverlay(props: CatOverlayProps) {
                     alt={`${breed.name} cat`}
                     fill={true}
                     className="object-cover object-[50%_15%]"
-                    sizes={`(max-width: ${breakpoints.sm}) 600px, (max-width: ${breakpoints.md}) 700px, (max-width: ${breakpoints.lg}) 400px, (max-width: ${breakpoints["2xl"]}) 700px`}
+                    sizes={`(max-width: ${breakpoints.md}) 90vw, (max-width: ${breakpoints["2xl"]}) 300px, 400px`}
                 />
             </div>
             <h2 className="pb-4 md:text-2xl ">{breed.name}</h2>
