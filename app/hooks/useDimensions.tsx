@@ -1,4 +1,3 @@
-import { MotionValue } from "framer-motion";
 import { useState, useCallback, useLayoutEffect, RefObject, useRef, useEffect } from "react";
 
 export type Dimensions =
@@ -8,7 +7,7 @@ export type Dimensions =
       }
     | undefined;
 
-export type ReturnType = {
+export type DimensionsReturnType = {
     ref: (node: HTMLElement | null) => void;
     dimensions: Dimensions;
     manualRemeasure: () => Dimensions;
@@ -16,7 +15,7 @@ export type ReturnType = {
 
 const DEBOUNCE_TIME_MS = 100;
 
-export default function useDimensions(): ReturnType {
+export default function useDimensions(): DimensionsReturnType {
     const [node, setNode] = useState<HTMLElement | null>(null);
     const timeout = useRef<NodeJS.Timeout | null>(null);
 

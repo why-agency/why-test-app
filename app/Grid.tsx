@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CatData } from "./page";
 import Image from "next/image";
 import { useRef } from "react";
+import { CatData } from "./types";
 
 export interface GridProps {
     catData: CatData[];

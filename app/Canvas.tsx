@@ -5,8 +5,8 @@ import useDimensions from "./hooks/useDimensions";
 import { cn } from "./lib/utils";
 import { useEffect, useRef, useState } from "react";
 import Grid from "./Grid";
-import { CatData } from "./page";
 import Filters from "./Filters";
+import { CatData } from "./types";
 
 export interface CanvasProps {
     catData: CatData[];
@@ -72,8 +72,6 @@ export default function Canvas(props: CanvasProps) {
         setFilteredData(data);
         animationControls.start({ x: 0, y: 0 });
     }
-
-    console.log(filteredData);
 
     return (
         <div className={cn("h-screen overflow-hidden", { invisible: !dimensions })}>

@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { CatData } from "./page";
 import { cn, hasCommonElement, removeElementFromArray } from "./lib/utils";
+import { CatData } from "./types";
 
-export interface FiltersProps {
-    data: CatData[];
-    onDataFiltered: (data: CatData[]) => void;
-}
-
-export const breeds = [
+const breeds = [
     { id: "beng", name: "Bengal" },
     { id: "abys", name: "Abyssinian" },
     { id: "norw", name: "Norwegian Forest Cat" },
     { id: "ragd", name: "Ragdoll" },
 ];
+
+export interface FiltersProps {
+    data: CatData[];
+    onDataFiltered: (data: CatData[]) => void;
+}
 
 export default function Filters(props: FiltersProps) {
     const [activeBreeds, setActiveBreeds] = useState<string[]>([]);
