@@ -58,7 +58,6 @@ export default function CatGrid(props: CatGridProps) {
                             className={cn("size-full cursor-pointer object-cover")}
                             draggable={false}
                             onClick={handleItemClick}
-                            sizes="(max-width: 768px) 100vw, 33vw"	
                         />
                     </ResponsiveDialog>
                 </motion.div>

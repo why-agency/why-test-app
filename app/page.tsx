@@ -5,8 +5,6 @@ import { CatData } from "./types";
 export default async function HomePage() {
     let catData: CatData[] = await getData();
 
-    console.log(catData[0]);
-
     return (
         <main>
             <Canvas catData={catData} />

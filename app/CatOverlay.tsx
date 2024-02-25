@@ -21,8 +21,8 @@ export default function CatOverlay(props: CatOverlayProps) {
     const breed = props.data.breeds.length ? props.data.breeds[0] : notFoundBreedData;
 
     return (
-        <div className="max-h-[80vh] p-8">
-            <div className="relative mb-4 aspect-video rounded-2xl">
+        <div className="max-h-[80vh] p-4">
+            <div className="relative mb-8 aspect-video overflow-hidden rounded-2xl">
                 <Image
                     src={props.data.url}
                     alt={`${breed.name} cat`}
