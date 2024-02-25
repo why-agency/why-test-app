@@ -24,8 +24,8 @@ export default function Canvas(props: CanvasProps) {
     const animationControls = useAnimationControls();
     const dragRef = useRef<HTMLDivElement>(null);
     const timeout = useRef<NodeJS.Timeout | null>(null);
-
     const [canvasStyle, setCanvasStyle] = useState<{ size?: string; transform?: string }>({ size: undefined, transform: undefined });
+    const isDraggingRef = useRef<boolean>(false);
 
     useEffect(() => {
         function updateCanvasStyle() {
@@ -96,6 +96,8 @@ export default function Canvas(props: CanvasProps) {
                         ref={dragRef}
                         animate={animationControls}
                         transition={{ type: "spring", duration: 0.5, bounce: 0.1 }}
+                        onDragStart={() => (isDraggingRef.current = true)}
+                        onDragEnd={() => (isDraggingRef.current = false)}
                     >
                         <div
                             className="flex"
@@ -104,6 +106,7 @@ export default function Canvas(props: CanvasProps) {
                             <CatGrid
                                 catData={filteredData}
                                 onLayoutAnimationComplete={() => manualRemeasure()}
+                                isDraggingRef={isDraggingRef}
                             />
                         </div>
                     </motion.div>

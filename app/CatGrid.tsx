@@ -2,12 +2,15 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
 import { CatData } from "./types";
+import { ResponsiveDialog } from "@/components/ui/responsive-dialog";
+import { cn } from "@/lib/utils";
 
 export interface CatGridProps {
     catData: CatData[];
     onLayoutAnimationComplete: () => void;
+    isDraggingRef: RefObject<boolean>;
 }
 
 export default function CatGrid(props: CatGridProps) {
@@ -21,6 +24,14 @@ export default function CatGrid(props: CatGridProps) {
         timeout.current = setTimeout(() => {
             props.onLayoutAnimationComplete();
         }, 10);
+    }
+
+    // Do not trigger ResponsiveDialog while dragging. Only on click.
+    function handleItemClick(e: React.MouseEvent) {
+        if (!props.isDraggingRef.current) {
+            return;
+        }
+        e.preventDefault();
     }
 
     return (
@@ -37,14 +48,17 @@ export default function CatGrid(props: CatGridProps) {
                     layout
                     onLayoutAnimationComplete={handleLayoutComplete}
                 >
-                    <Image
-                        src={item.url}
-                        width={240}
-                        height={240}
-                        alt={`${item.breeds[0].name} cat`}
-                        className="size-full object-cover"
-                        draggable={false}
-                    />
+                    <ResponsiveDialog content={<></>}>
+                        <Image
+                            src={item.url}
+                            width={240}
+                            height={240}
+                            alt={`${item.breeds[0].name} cat`}
+                            className={cn("size-full object-cover")}
+                            draggable={false}
+                            onClick={handleItemClick}
+                        />
+                    </ResponsiveDialog>
                 </motion.div>
             ))}
         </motion.div>

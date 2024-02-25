@@ -19,7 +19,6 @@ export default function Filters(props: FiltersProps) {
     const [activeBreeds, setActiveBreeds] = useState<string[]>([]);
 
     function onBreedsChange(breedIds: string[]) {
-        console.log(breedIds);
 
         const filteredData = !breedIds.length
             ? props.data
