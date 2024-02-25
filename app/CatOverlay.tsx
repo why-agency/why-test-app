@@ -24,7 +24,7 @@ export default function CatOverlay(props: CatOverlayProps) {
 
     return (
         <div className="max-h-[80vh] p-4 max-md:text-sm ">
-            <div className="relative mb-4 aspect-video overflow-hidden rounded-2xl md:mb-8">
+            <div className="relative mb-4 aspect-video overflow-hidden rounded-lg md:mb-8">
                 <Image
                     src={props.data.url}
                     alt={`${breed.name} cat`}
