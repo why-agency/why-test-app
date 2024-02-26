@@ -49,6 +49,7 @@ export default function CatGrid(props: CatGridProps) {
                 <motion.div
                     key={item.id}
                     className="size-32 overflow-hidden rounded-md md:size-60"
+                    // style={{ boxShadow: "1px 1px 1px deeppink" }}
                     layout
                     onLayoutAnimationComplete={handleLayoutComplete}
                 >
