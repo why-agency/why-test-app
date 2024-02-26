@@ -23,9 +23,9 @@ export async function getData() {
     const limit = "100";
     const breeds = "beng,abys,norw,ragd";
 
-    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=${limit}&order=${order}`, {
-        headers: { "x-api-key": key, cache: "no-store" },
-        // next: { revalidate: 14400 }, // 4 hours
+    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=${limit}&order=${order}&breed_ids=${breeds}`, {
+        headers: { "x-api-key": key },
+        next: { revalidate: 14400 }, // 4 hours
     });
 
     if (!res.ok) {

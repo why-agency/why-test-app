@@ -3,13 +3,11 @@
 module.exports = {
     images: {
         formats: ["image/avif", "image/webp"],
-
+        // Images from cat api are hosted on different domains. So we allow all for now.
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "cdn2.thecatapi.com",
-                port: "",
-                pathname: "/images/**",
+                hostname: "**",
             },
         ],
     },
