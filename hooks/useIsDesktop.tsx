@@ -1,14 +1,14 @@
 import * as React from "react";
 import resolveConfig from "tailwindcss/resolveConfig";
 import config from "../tailwind.config";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const fullConfig = resolveConfig(config);
 
 const breakpoints = fullConfig.theme!.screens;
 
 export function useIsDesktop() {
-    const [value, setValue] = React.useState(true);
+    const [value, setValue] = useState(true);
 
     useEffect(() => {
         function onChange(event: MediaQueryListEvent) {
