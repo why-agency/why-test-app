@@ -13,14 +13,19 @@ function sortCatsById(data: CatData[]) {
 }
 
 export async function getData() {
-    const key = "live_QuSvCn7Bhyz3IMvM5df0AWtkBml4pVsxDPkIib9zUE1fjx1zMGjCKQc3RtYX2EtR";
+    const key: string | undefined = process.env.NEXT_CAT_API_KEY;
+
+    if (!key) {
+        throw new Error("Key for api.thecatapi.com not found");
+    }
+
     const order = "ASC";
     const limit = "100";
     const breeds = "beng,abys,norw,ragd";
 
-    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${breeds}&order=${order}`, {
-        headers: { "x-api-key": key },
-        next: { revalidate: 14400 }, // 4 hours
+    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=${limit}&order=${order}`, {
+        headers: { "x-api-key": key, cache: "no-store" },
+        // next: { revalidate: 14400 }, // 4 hours
     });
 
     if (!res.ok) {
