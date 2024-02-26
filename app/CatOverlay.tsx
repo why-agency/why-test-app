@@ -20,7 +20,7 @@ const notFoundBreedData: Breed = {
 // sizes={`(max-width: ${breakpoints.sm}) 600px, (max-width: ${breakpoints.md}) 700px, (max-width: ${breakpoints.lg}) 400px, 700px`}
 
 export default function CatOverlay(props: CatOverlayProps) {
-    const breed = props.data.breeds.length ? props.data.breeds[0] : notFoundBreedData;
+    const breed = props.data.breeds?.length ? props.data.breeds[0] : notFoundBreedData;
 
     return (
         <div className="max-h-[80vh] p-4 max-md:text-sm ">

@@ -23,7 +23,7 @@ export default function CatGridMobile(props: CatGridMobileProps) {
                                 src={item.url}
                                 width={240}
                                 height={240}
-                                alt={`${item.breeds[0].name} cat`}
+                                alt={`Image of a ${!!item.breeds?.length && item.breeds[0].name} cat`}
                                 className={cn("size-full cursor-pointer object-cover")}
                             />
                         </DrawerTrigger>

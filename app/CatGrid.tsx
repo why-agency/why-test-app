@@ -58,7 +58,7 @@ export default function CatGrid(props: CatGridProps) {
                                 src={item.url}
                                 width={240}
                                 height={240}
-                                alt={`${item.breeds[0].name} cat`}
+                                alt={`Image of a ${!!item.breeds?.length && item.breeds[0].name} cat`}
                                 className={cn("size-full cursor-pointer object-cover")}
                                 draggable={false}
                                 onClick={handleItemClick}
