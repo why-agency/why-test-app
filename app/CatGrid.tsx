@@ -49,7 +49,6 @@ export default function CatGrid(props: CatGridProps) {
                 <motion.div
                     key={item.id}
                     className="size-32 overflow-hidden rounded-md md:size-60"
-                    // style={{ boxShadow: "1px 1px 1px deeppink" }}
                     layout
                     onLayoutAnimationComplete={handleLayoutComplete}
                 >
@@ -69,18 +68,6 @@ export default function CatGrid(props: CatGridProps) {
                             <CatOverlay data={item} />
                         </DialogContent>
                     </Dialog>
-                    {/* <ResponsiveDialog content={}></ResponsiveDialog> */}
-                    {/* <ResponsiveDialog content={<CatOverlay data={item} />}>
-                        <Image
-                            src={item.url}
-                            width={240}
-                            height={240}
-                            alt={`${item.breeds[0].name} cat`}
-                            className={cn("size-full cursor-pointer object-cover")}
-                            draggable={false}
-                            onClick={handleItemClick}
-                        />
-                    </ResponsiveDialog> */}
                 </motion.div>
             ))}
         </motion.div>
