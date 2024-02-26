@@ -13,10 +13,9 @@ export default async function HomePage() {
                 <Canvas catData={catData} />
             </RenderOnDevice>
 
-            <CatGridMobile
-                catData={catData}
-                className="md:hidden"
-            />
+            <RenderOnDevice renderOn="mobile">
+                <CatGridMobile catData={catData} />
+            </RenderOnDevice>
         </main>
     );
 }
