@@ -19,13 +19,11 @@ export async function getData() {
         throw new Error("Key for api.thecatapi.com not found");
     }
 
-    const order = "ASC";
     const limit = "100";
     const breeds = "beng,abys,norw,ragd";
 
-    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=${limit}&order=${order}&breed_ids=${breeds}`, {
+    const res = await fetch(`https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${breeds}`, {
         headers: { "x-api-key": key },
-        next: { revalidate: 14400 }, // 4 hours
     });
 
     if (!res.ok) {
@@ -33,5 +31,6 @@ export async function getData() {
     }
 
     const catData: CatData[] = await res.json();
+    // pseudo-randomize/shuffle images. otherwise images are grouped by breed
     return sortCatsById(catData);
 }
