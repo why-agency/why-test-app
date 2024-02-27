@@ -21,7 +21,7 @@ export default function Filters(props: FiltersProps) {
 
     function handleValueChange(breedIds: string[]) {
         const searchParams = new URLSearchParams({ breeds: JSON.stringify(breedIds) });
-        const target = `${pathname}?${searchParams.toString()}`;
+        const target = breedIds.length ? `${pathname}?${searchParams.toString()}` : pathname;
         router.push(target);
     }
 
