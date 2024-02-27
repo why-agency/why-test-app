@@ -31,6 +31,5 @@ export async function getData() {
     }
 
     const catData: CatData[] = await res.json();
-    // pseudo-randomize/shuffle images. otherwise images are grouped by breed
-    return sortCatsById(catData);
+    return sortCatsById(catData); // pseudo-randomize/shuffle images. otherwise images are grouped by breed
 }

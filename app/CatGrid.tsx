@@ -30,7 +30,7 @@ export default function CatGrid(props: CatGridProps) {
         }, 10);
     }
 
-    // Do not trigger ResponsiveDialog while dragging. Only on click.
+    // Do not trigger ResponsiveDialog while dragging.
     function handleItemClick(e: React.MouseEvent) {
         if (!props.isDraggingRef.current) {
             return;

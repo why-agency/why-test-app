@@ -13,8 +13,10 @@ export interface CanvasProps {
     className?: string;
 }
 
-const RESIZE_DEBOUNCE_MS = 500;
+// Size of the 'working surface'.
+// Make sure this is big enough to fit the maximal possible (=unfiltered) amount of images.
 const CANVAS_SIZE = 10000;
+const RESIZE_DEBOUNCE_MS = 500;
 
 export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();

@@ -3,7 +3,7 @@ import { cn, hasCommonElement } from "@/lib/utils";
 import { CatData } from "../types/types";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-const breeds = [
+const filterBreeds = [
     { id: "beng", name: "Bengal" },
     { id: "abys", name: "Abyssinian" },
     { id: "norw", name: "Norwegian Forest Cat" },
@@ -40,7 +40,7 @@ export default function Filters(props: FiltersProps) {
                     value={activeBreeds}
                     onValueChange={(breedIds) => onBreedsChange(breedIds)}
                 >
-                    {breeds.map((breed) => (
+                    {filterBreeds.map((breed) => (
                         <ToggleGroupItem
                             key={breed.id}
                             value={breed.id}

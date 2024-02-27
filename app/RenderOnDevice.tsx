@@ -12,9 +12,5 @@ export default function RenderOnDevice(props: RenderOnDeviceProps) {
     const isDesktop = useIsDesktop();
     const renderOnDesktop = props.renderOn === "desktop";
 
-    if (renderOnDesktop !== isDesktop) {
-        return <></>;
-    }
-
-    return props.children;
+    return renderOnDesktop === isDesktop ? props.children : <></>;
 }
