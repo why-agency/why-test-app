@@ -6,12 +6,12 @@ import { useEffect, useRef, useState } from "react";
 import CatGrid from "./CatGrid";
 import Filters from "./Filters";
 import { CatData } from "../types/types";
-import { cn } from "@/lib/utils";
-import useFilteredData from "@/hooks/useFilteredData";
+import { cn, filterData } from "@/lib/utils";
 
 export interface CanvasProps {
     catData: CatData[];
     className?: string;
+    filterBreeds: string[] | undefined;
 }
 
 // Size of the 'working surface'.
@@ -22,7 +22,8 @@ const RESIZE_DEBOUNCE_MS = 500;
 export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();
     const [key, setKey] = useState(0);
-    const { filteredData, activeBreeds, updateActiveBreeds } = useFilteredData(props.catData);
+    // const { filteredData, activeBreeds, updateActiveBreeds } = useFilteredData(props.catData);
+    const filtredData = filterData(props.catData, props.filterBreeds);
     const dragContainerRef = useRef<HTMLDivElement>(null);
     const dragControls = useDragControls();
     const animationControls = useAnimationControls();
@@ -74,7 +75,7 @@ export default function Canvas(props: CanvasProps) {
 
     useEffect(() => {
         animationControls.start({ x: 0, y: 0 });
-    }, [filteredData, animationControls]);
+    }, [props.filterBreeds, animationControls]);
 
     return (
         <div className={cn("h-screen overflow-hidden", { invisible: !dimensions }, props.className)}>
@@ -108,7 +109,7 @@ export default function Canvas(props: CanvasProps) {
                             ref={ref}
                         >
                             <CatGrid
-                                catData={filteredData}
+                                catData={filtredData}
                                 onLayoutAnimationComplete={() => manualRemeasure()}
                                 isDraggingRef={isDraggingRef}
                             />
@@ -119,8 +120,7 @@ export default function Canvas(props: CanvasProps) {
 
             <Filters
                 className={"max-md:hidden"}
-                updateActiveBreeds={updateActiveBreeds}
-                activeBreeds={activeBreeds}
+                activeBreeds={props.filterBreeds}
             />
         </div>
     );

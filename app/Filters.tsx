@@ -1,8 +1,7 @@
-import { cn, hasCommonElement } from "@/lib/utils";
-import { CatData } from "../types/types";
+import { cn } from "@/lib/utils";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const filterBreeds = [
     { id: "beng", name: "Bengal" },
@@ -12,14 +11,18 @@ const filterBreeds = [
 ];
 
 export interface FiltersProps {
-    updateActiveBreeds: (breeds: string[] | null) => void;
-    activeBreeds: string[] | null;
+    activeBreeds: string[] | undefined;
     className?: string;
 }
 
 export default function Filters(props: FiltersProps) {
+    const router = useRouter();
+    const pathname = usePathname();
+
     function handleValueChange(breedIds: string[]) {
-        !!breedIds.length ? props.updateActiveBreeds(breedIds) : props.updateActiveBreeds(null);
+        const searchParams = new URLSearchParams({ breeds: JSON.stringify(breedIds) });
+        const target = `${pathname}?${searchParams.toString()}`;
+        router.push(target);
     }
 
     return (

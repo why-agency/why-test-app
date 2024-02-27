@@ -1,4 +1,4 @@
-import { useState, useCallback, useLayoutEffect, RefObject, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 export type Dimensions =
     | {

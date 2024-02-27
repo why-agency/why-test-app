@@ -4,13 +4,21 @@ import { CatData } from "../types/types";
 import CatGridMobile from "./CatGridMobile";
 import RenderOnDevice from "./RenderOnDevice";
 
-export default async function HomePage() {
+export interface HomePageProps {
+    searchParams: { breeds: string | null };
+}
+
+export default async function HomePage(props: HomePageProps) {
     let catData: CatData[] = await getData();
+    const filterBreeds = props.searchParams.breeds ? (JSON.parse(props.searchParams.breeds) as string[]) : undefined;
 
     return (
         <main>
             <RenderOnDevice renderOn="desktop">
-                <Canvas catData={catData} />
+                <Canvas
+                    catData={catData}
+                    filterBreeds={filterBreeds}
+                />
             </RenderOnDevice>
 
             <RenderOnDevice renderOn="mobile">
