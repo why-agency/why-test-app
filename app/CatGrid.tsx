@@ -7,8 +7,7 @@ import { CatData } from "../types/types";
 import { cn } from "@/lib/utils";
 import CatOverlay from "./CatOverlay";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-import { DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 export interface CatGridProps {
     catData: CatData[];
