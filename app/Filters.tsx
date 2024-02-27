@@ -1,7 +1,9 @@
-import { cn } from "@/lib/utils";
+import { cn, filterData } from "@/lib/utils";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { CatData } from "@/types/types";
+import { useState } from "react";
 
 const filterBreeds = [
     { id: "beng", name: "Bengal" },
@@ -11,18 +13,23 @@ const filterBreeds = [
 ];
 
 export interface FiltersProps {
-    activeBreeds: string[] | undefined;
+    initiallyActiveBreeds: string[] | undefined;
     className?: string;
+    fullData: CatData[];
+    onDataFiltered: (data: CatData[]) => void;
 }
 
 export default function Filters(props: FiltersProps) {
-    const router = useRouter();
+    const [activeBreeds, setActiveBreeds] = useState<string[] | undefined>(props.initiallyActiveBreeds);
     const pathname = usePathname();
 
     function handleValueChange(breedIds: string[]) {
+        const filteredData = filterData(props.fullData, breedIds);
+        setActiveBreeds(breedIds);
+        props.onDataFiltered(filteredData);
         const searchParams = new URLSearchParams({ breeds: JSON.stringify(breedIds) });
         const target = breedIds.length ? `${pathname}?${searchParams.toString()}` : pathname;
-        router.push(target);
+        window.history.pushState(null, "", target);
     }
 
     return (
@@ -30,7 +37,7 @@ export default function Filters(props: FiltersProps) {
             <div className="pointer-events-auto  flex rounded-lg bg-neutral-200 p-1 shadow shadow-neutral-500">
                 <ToggleGroup
                     type="multiple"
-                    value={props.activeBreeds || []}
+                    value={activeBreeds}
                     onValueChange={handleValueChange}
                 >
                     {filterBreeds.map((breed) => (

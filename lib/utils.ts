@@ -9,7 +9,7 @@ export function hasCommonElement(array1: string[], array2: string[]) {
     return array1.some((item) => array2.includes(item));
 }
 
-export function filterData(data: CatData[], breedIds: string[] | undefined) {
+export function filterData(data: CatData[], breedIds: string[] | undefined): CatData[] {
     return !breedIds || !breedIds.length
         ? data
         : data.filter((cat: CatData) => {

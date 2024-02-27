@@ -22,8 +22,7 @@ const RESIZE_DEBOUNCE_MS = 500;
 export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();
     const [key, setKey] = useState(0);
-    // const { filteredData, activeBreeds, updateActiveBreeds } = useFilteredData(props.catData);
-    const filtredData = filterData(props.catData, props.filterBreeds);
+    const [filteredData, setFilteredData] = useState(filterData(props.catData, props.filterBreeds));
     const dragContainerRef = useRef<HTMLDivElement>(null);
     const dragControls = useDragControls();
     const animationControls = useAnimationControls();
@@ -73,9 +72,10 @@ export default function Canvas(props: CanvasProps) {
         };
     }
 
-    useEffect(() => {
+    function handleDataFiltered(data: CatData[]) {
+        setFilteredData(data);
         animationControls.start({ x: 0, y: 0 });
-    }, [props.filterBreeds, animationControls]);
+    }
 
     return (
         <div className={cn("h-screen overflow-hidden", { invisible: !dimensions }, props.className)}>
@@ -109,7 +109,7 @@ export default function Canvas(props: CanvasProps) {
                             ref={ref}
                         >
                             <CatGrid
-                                catData={filtredData}
+                                catData={filteredData}
                                 onLayoutAnimationComplete={() => manualRemeasure()}
                                 isDraggingRef={isDraggingRef}
                             />
@@ -119,8 +119,10 @@ export default function Canvas(props: CanvasProps) {
             </div>
 
             <Filters
+                fullData={props.catData}
                 className={"max-md:hidden"}
-                activeBreeds={props.filterBreeds}
+                initiallyActiveBreeds={props.filterBreeds}
+                onDataFiltered={handleDataFiltered}
             />
         </div>
     );
