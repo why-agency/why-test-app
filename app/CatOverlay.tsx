@@ -27,7 +27,7 @@ export default function CatOverlay(props: CatOverlayProps) {
                     src={props.data.url}
                     alt={`${breed.name} cat`}
                     fill={true}
-                    className="object-cover object-[50%_15%]"
+                    className="object-cover object-[50%_30%]"
                     sizes={`(max-width: ${breakpoints.md}) 90vw, (max-width: ${breakpoints["2xl"]}) 300px, 400px`}
                 />
             </div>
