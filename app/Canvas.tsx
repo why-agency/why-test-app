@@ -7,6 +7,7 @@ import CatGrid from "./CatGrid";
 import Filters from "./Filters";
 import { CatData } from "../types/types";
 import { cn } from "@/lib/utils";
+import useFilteredData from "@/hooks/useFilteredData";
 
 export interface CanvasProps {
     catData: CatData[];
@@ -21,7 +22,7 @@ const RESIZE_DEBOUNCE_MS = 500;
 export default function Canvas(props: CanvasProps) {
     const { ref, dimensions, manualRemeasure } = useDimensions();
     const [key, setKey] = useState(0);
-    const [filteredData, setFilteredData] = useState(props.catData);
+    const { filteredData, activeBreeds, updateActiveBreeds } = useFilteredData(props.catData);
     const dragContainerRef = useRef<HTMLDivElement>(null);
     const dragControls = useDragControls();
     const animationControls = useAnimationControls();
@@ -71,10 +72,9 @@ export default function Canvas(props: CanvasProps) {
         };
     }
 
-    function handleDataFiltered(data: CatData[]) {
-        setFilteredData(data);
+    useEffect(() => {
         animationControls.start({ x: 0, y: 0 });
-    }
+    }, [filteredData, animationControls]);
 
     return (
         <div className={cn("h-screen overflow-hidden", { invisible: !dimensions }, props.className)}>
@@ -119,8 +119,8 @@ export default function Canvas(props: CanvasProps) {
 
             <Filters
                 className={"max-md:hidden"}
-                data={props.catData}
-                onDataFiltered={handleDataFiltered}
+                updateActiveBreeds={updateActiveBreeds}
+                activeBreeds={activeBreeds}
             />
         </div>
     );
