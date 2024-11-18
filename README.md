@@ -61,7 +61,7 @@ On larger screens, the cat grid offers a filter bar next to the cat cards. Check
 
 Please distribute cards across columns as you see fit.
 
-Optimally, after filtering the grid changes in an animated manner using [framer motion](https://motion.dev/).
+When filtering results, the grid changes in an animated manner using [motion](https://motion.dev/).
 
 ## Expected outcome
 Please submit a PR with your implementation of the Cat grid. We'd expect a working deployment that we can preview in Vercel.
