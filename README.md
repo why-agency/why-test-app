@@ -62,6 +62,17 @@ On larger screens, the cat grid offers a filter bar next to the cat cards. Check
 Please distribute cards across columns as you see fit.
 
 When filtering results, the grid changes in an animated manner using [motion](https://motion.dev/).
+The specifics of the animations are left open to your interpretation, but as a starter idea:
+
+Card appear animation: 
+  - Opacity: 0 --> 1
+  - y: 50 --> 0
+  - ease: out
+    
+Card disappear animation:
+  - Opacity: 1 --> 0
+  - y: 0 --> -50
+  - ease: in
 
 ## Expected outcome
 Please submit a PR with your implementation of the Cat grid. We'd expect a working deployment that we can preview in Vercel.
