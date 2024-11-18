@@ -61,7 +61,7 @@ On larger screens, the cat grid offers a filter bar next to the cat cards. Check
 
 Please distribute cards across columns as you see fit.
 
-Bonus: When filtering results, we’d like to see an animation applied to the changes in the grid or the individual grid items. Decide on your own which aspects to animate and how to implement it. Feel free to use animation libraries, such as [motion](https://motion.dev/). For example, a card can have its opacity and `y` position animated when appearing and/or disappearing.
+Bonus: When filtering results, we’d like to see an animation applied to the changes in the grid or the individual grid items. Decide on your own which aspects to animate and how to implement it. Ideally implemented using [motion](https://motion.dev/). For example, a card can have its opacity and `y` position animated when appearing and/or disappearing.
 
 
 ## Expected outcome
