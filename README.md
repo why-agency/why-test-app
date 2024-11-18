@@ -25,7 +25,7 @@ Please pull the environment variables from Vercel using the following command:
 ```
 vc env pull --environment=production --yes
 ```
-You need to have the [Vercel CLI](https://vercel.com/docs/cli) installed globally.
+You need to have the [Vercel CLI](https://vercel.com/docs/cli) installed globally and linked to the project with `vercel link`
 
 
 ## The task
@@ -57,9 +57,11 @@ On mobile, the cat grid features a headline and single row of cat cards. Clickin
 There are **no** filters on mobile
 
 #### Tablet and above
-On larger screens, the cat grid offers a filter bar next to the cat cards. Checking one of the filters should update the card grid. Clicking on a cat card triggers the overlay, displaying additional information about the selected breeed.
+On larger screens, the cat grid offers a filter bar next to the cat cards. Checking one of the filters should update the card grid. Clicking on a cat card triggers the overlay, displaying additional information about the selected breed.
 
-Please distribute cards across columns as you see fit
+Please distribute cards across columns as you see fit.
+
+Optimally, after filtering the grid changes in an animated manner using [framer motion](https://motion.dev/).
 
 ## Expected outcome
 Please submit a PR with your implementation of the Cat grid. We'd expect a working deployment that we can preview in Vercel.
