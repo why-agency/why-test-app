@@ -70,7 +70,7 @@ Please distribute cards across columns as you see fit.
 ## Expected outcome
 Please submit a PR with your implementation of the Cat grid. We'd expect a working deployment that we can preview in Vercel. 
 
-Since we don't want to steal too much of your time, **please don't spend more than 4h on the task** and try to complete as much as possible. **It's not necessarily expected that everything is completed**
+Since we don't want to steal too much of your time, **please don't spend more than 4h on the task** and try to complete as much as possible. It's not necessarily expected that everything is completed, you can also chose on your own which aspects you want to focus on.
 
 Thank you so much for taking the time to complete this task 🙏
 If you have any question, please do not hesitate to reach out.
