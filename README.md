@@ -52,17 +52,20 @@ https://api.thecatapi.com/v1/breeds/:breed_id
 Please review [the Cat grid mock-up in the figma file](https://www.figma.com/file/QaAUTjri39HPaSUTEoMfWQ/Cat-Grid?type=design&node-id=0%3A1&mode=dev) linked above. Please choose an appropriate breakpoint when switching between mobile and desktop layouts.
 
 #### Mobile
-On mobile, the cat grid features a headline and single row of cat cards. Clicking on a cat card triggers the overlay, displaying additional information about the selected breeed.
+On mobile, the cat grid features a headline and single row of cat cards. 
+
+**Bonus**: Clicking on a cat card triggers the overlay, displaying additional information about the selected breeed.
 
 There are **no** filters on mobile
 
 #### Tablet and above
-On larger screens, the cat grid offers a filter bar next to the cat cards. Checking one of the filters should update the card grid. Clicking on a cat card triggers the overlay, displaying additional information about the selected breed.
+On larger screens, the cat grid offers a filter bar next to the cat cards. Checking one of the filters should update the card grid. 
 
 Please distribute cards across columns as you see fit.
 
-Bonus: When filtering results, we’d like to see an animation applied to the changes in the grid or the individual grid items. Decide on your own which aspects to animate and how to implement it. Ideally implemented using [motion](https://motion.dev/). For example, a card can have its opacity and `y` position animated when appearing and/or disappearing.
+**Bonus**: When filtering results, we’d like to see an animation applied to the changes in the grid or the individual grid items. Decide on your own which aspects to animate and how to implement it. Ideally implemented using [motion](https://motion.dev/). For example, a card can have its opacity and `y` position animated when appearing and/or disappearing.
 
+**Bonus 2**: Clicking on a cat card triggers the overlay, displaying additional information about the selected breed.
 
 ## Expected outcome
 Please submit a PR with your implementation of the Cat grid. We'd expect a working deployment that we can preview in Vercel.
