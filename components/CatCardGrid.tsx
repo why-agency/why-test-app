@@ -1,22 +1,19 @@
-import CatCard from "./CatCard"
+import Grid from "./Grid";
+import FilterList from "./FilterList"
+import { getCats } from "../lib/actions";
 
-export type CatData = {
-    id: string,
-    url: string,
-    width: number,
-    height: number
+interface CatCardGridProps {
+  filter: any
 }
 
-export default async function CatCardGrid() {
-    const res = await fetch("https://api.thecatapi.com/v1/images/search?limit=10", { method: 'GET' })
-    const data = await res.json() as CatData[]
+export default async function CatCardGrid(props: CatCardGridProps) {
+  const catData = await getCats(props.filter.filterBreed)
 
-    return (
-      <section className="w-full grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {data.map(cat => (
-            <CatCard key={cat.id} src={cat.url} />
-        ))}
-      </section>
-    );
-  };
-  
+  return (
+    <div className="flex gap-6 lg:max-w-screen-xl lg:mx-auto">
+      <FilterList />
+      <Grid catData={catData} />
+    </div>
+
+  );
+};

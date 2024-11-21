@@ -1,18 +1,14 @@
 import BreedListBox from "./filters/BreedListBox"
+import { getBreeds } from "@/lib/actions";
 
-export type BreedStats = {
-  id: string,
-  name: string
-}
 
 export default async function FilterList() {
-  const res = await fetch("https://api.thecatapi.com/v1/breeds", { method: "GET" })
-  const data = (await res.json()) as BreedStats[]
+  const breedData = await getBreeds()
 
   return (
-    <div className="min-w-max">
+    <div className="min-w-max hidden sm:block">
       <h2 className="mb-4">Filter by breed</h2>
-      <BreedListBox breeds={data} />
+      <BreedListBox breeds={breedData} />
     </div>
   );
 }
