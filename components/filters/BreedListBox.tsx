@@ -36,7 +36,7 @@ export default function BreedListBox({ breeds }: { breeds: BreedStats[] }) {
   };
 
   return (
-    <div className="mx-auto h-screen w-52">
+    <div className="mx-auto h-max w-52">
       <Listbox value={selected} onChange={onChange}>
         <ListboxButton className="relative block w-full rounded-lg bg-white/5 py-1.5 pr-8 pl-3 text-left text-sm/6 text-white focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25">
           {selected.name}
