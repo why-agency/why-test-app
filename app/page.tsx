@@ -1,7 +1,10 @@
-export default function CatGrid() {
+import CatCardGrid from "../components/CatCardGrid";
+
+export default function Page({searchParams} : {searchParams: any}) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      A cat grid
+    <main className="min-h-screen mx-6">
+      <h1 className="mt-6 mb-10 text-xl">My cat collection</h1>
+      <CatCardGrid filter={searchParams} />
     </main>
-  )
+  );
 }
